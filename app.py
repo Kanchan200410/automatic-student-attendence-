@@ -1,19 +1,19 @@
 from flask import Flask, render_template, Response, request, redirect
 import cv2
 import os
-from models.face_recognition import recognize_face
+from models.face_recognition import recognize_face, load_faces
 from database import get_db
 from datetime import datetime
 
 app = Flask(__name__)
-
+load_faces()
 UPLOAD_FOLDER = "static/uploads"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 camera = cv2.VideoCapture(0)
 
-# =========================
-# 🔹 MARK ATTENDANCE
 # =========================
 def mark_attendance(name):
     db = get_db()
@@ -46,14 +46,12 @@ def mark_attendance(name):
     db.close()
 
 # =========================
-# 🔹 CAMERA STREAM
-# =========================
 def generate_frames():
     while True:
         success, frame = camera.read()
 
         if not success:
-            break
+            continue
 
         name = recognize_face(frame)
 
@@ -63,14 +61,15 @@ def generate_frames():
             cv2.putText(frame, f"{name} Present", (50, 50),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-        _, buffer = cv2.imencode('.jpg', frame)
+        ret, buffer = cv2.imencode('.jpg', frame)
+
+        if not ret:
+            continue
+
         frame = buffer.tobytes()
 
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
-# =========================
-# 🔹 ROUTES
 # =========================
 @app.route('/')
 def index():
@@ -81,8 +80,6 @@ def video():
     return Response(generate_frames(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-# =========================
-# 🔹 REGISTER STUDENT
 # =========================
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -103,7 +100,7 @@ def register():
             (name, roll, filename)
         )
         db.commit()
-
+        load_faces()
         cursor.close()
         db.close()
 
@@ -111,8 +108,6 @@ def register():
 
     return render_template("register.html")
 
-# =========================
-# 🔹 VIEW ATTENDANCE
 # =========================
 @app.route('/attendance')
 def attendance():
