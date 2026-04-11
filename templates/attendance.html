@@ -7,22 +7,34 @@
 
 <h2>Attendance Records</h2>
 
-<table border="1">
-<tr>
-    <th>Name</th>
-    <th>Roll No</th>
-    <th>Date</th>
-    <th>Time</th>
-</tr>
+<form method="POST">
+    <label>Select Date:</label>
+    <input type="date" name="date">
+    <button type="submit">Filter</button>
+</form>
 
-{% for row in records %}
-<tr>
-    <td>{{ row[0] }}</td>
-    <td>{{ row[1] }}</td>
-    <td>{{ row[2] }}</td>
-    <td>{{ row[3] }}</td>
-</tr>
-{% endfor %}
+<br>
+
+<table border ="1">
+    <tr>
+        <th>Name</th>
+        <th>Roll No</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Teacher</th>
+    </tr>
+
+    {% for row in records %}
+    <tr>
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>
+        <td>{{ row[4] }}</td>
+        <td>{{ row[5] }}</td>
+    </tr>
+    {% endfor %}
 
 </table>
 

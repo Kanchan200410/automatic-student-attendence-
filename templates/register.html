@@ -8,11 +8,30 @@
 <h2>Register Student</h2>
 
 <form method="POST" enctype="multipart/form-data">
+
+    Role:
+    <select name="role" required>
+        <option value="">-- Select Role --</option>
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+        <option value="hod">HOD</option>
+        <option value="admin">Admin</option>
+    </select>
+    <br><br>
+
     Name: <input type="text" name="name" required><br><br>
     Roll No: <input type="text" name="roll" required><br><br>
-    Image: <input type="file" name="image" required><br><br>
+    Age: <input type="number" name="age" required><br><br>
+    Section: <input type="text" name="section" required><br><br>
+    Year: <input type="text" name="year" required><br><br>
+    Branch: <input type="text" name="branch" required><br><br>
+    Phone: <input type="text" name="phone" required><br><br>
+    Email: <input type="email" name="email" required><br><br>
+
+    Image: <input type="file" name="image" accept="image/*" required><br><br>
 
     <button type="submit">Register</button>
+
 </form>
 
 </body>

@@ -5,6 +5,6 @@ def get_db():
         host="localhost",
         user="root",
         password="2005",   # 🔥 change this
-        database="attendance_db",
+        database="student_db",
         port=3306
     )
