@@ -1,20 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>AI Attendance</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Attendance System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
 
-<h2>Live Attendance (DeepFace)</h2>
+<header>
+  AI Attendance System
+  <span class="header-sub">VISION MODULE &nbsp;|&nbsp; LIVE FEED</span>
+</header>
 
-<img src="{{ url_for('video') }}" width="600">
+<div class="page-wrap">
 
-<br><br>
+  <div class="section-heading">Live Camera Feed</div>
 
-<a href="/register">Register Student</a> |
-<a href="/attendance">View Attendance</a>
+  <div class="glass-panel" style="display:inline-block; padding: 16px; margin-bottom: 32px;">
+    <div class="camera-box">
+      <div class="live-badge">LIVE</div>
+      <div class="scan-line"></div>
+      <img src="{{ url_for('video') }}" alt="Live Camera Feed">
+    </div>
+  </div>
 
+  <div class="section-heading">System Controls</div>
+
+  <div class="btn-actions">
+    <a href="/register">
+      <button class="btn">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        Register Student
+      </button>
+    </a>
+    <a href="/attendance">
+      <button class="btn">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        View Attendance
+      </button>
+    </a>
+  </div>
+
+</div>
+
+<script>console.log("Camera stream started...");</script>
 </body>
 </html>
-
-# hello

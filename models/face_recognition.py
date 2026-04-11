@@ -1,55 +1,42 @@
-import cv2
+from deepface import DeepFace
 import os
-import numpy as np
+import cv2
 
-# Load face detector
-face_cascade = cv2.CascadeClassifier(
-    cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
-)
+UPLOAD_PATH = "static/uploads"
 
-known_faces = []
-known_names = []
-
-# =========================
-def load_faces():
-    global known_faces, known_names
-
-    path = "static/uploads"
-    known_faces.clear()
-    known_names.clear()
-
-    for file in os.listdir(path):
-        if file.endswith(('.jpg', '.png', '.jpeg')):
-            img_path = os.path.join(path, file)
-
-            img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-
-            if img is None:
-                continue
-
-            img = cv2.resize(img, (100, 100))
-
-            known_faces.append(img)
-            known_names.append(file.split('.')[0])
-
-# =========================
 def recognize_face(frame):
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    try:
+        # Resize for speed
+        frame = cv2.resize(frame, (320, 240))
 
-    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+        temp_path = "temp.jpg"
+        cv2.imwrite(temp_path, frame)
 
-    for (x, y, w, h) in faces:
-        face = gray[y:y+h, x:x+w]
+        for file in os.listdir(UPLOAD_PATH):
+            if file.endswith(('.jpg', '.png', '.jpeg')):
+                db_img = os.path.join(UPLOAD_PATH, file)
 
-        if face.size == 0:
-            continue
+                try:
+                    result = DeepFace.verify(
+                        img1_path=temp_path,
+                        img2_path=db_img,
+                        model_name="Facenet",
+                        enforce_detection=False
+                    )
 
-        face = cv2.resize(face, (100, 100))
+                    print("Comparing with:", file, "| Result:", result)
 
-        for i, known_face in enumerate(known_faces):
-            diff = np.linalg.norm(known_face - face)
+                    # 🔥 FIX: better matching condition
+                    if result["verified"] or result["distance"] < 0.6:
+                        name = file.split('.')[0].lower().strip()
+                        return name
 
-            if diff < 2000:   # threshold (adjust if needed)
-                return known_names[i]
+                except Exception as e:
+                    print("DeepFace error:", e)
+                    continue
 
-    return None
+        return None
+
+    except Exception as e:
+        print("Main error:", e)
+        return None

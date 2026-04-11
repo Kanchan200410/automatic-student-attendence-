@@ -1,30 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Attendance</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Records — AI Attendance</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
 
-<h2>Attendance Records</h2>
+<header>
+  AI Attendance System
+  <span class="header-sub">ATTENDANCE RECORDS</span>
+</header>
 
-<table border="1">
-<tr>
-    <th>Name</th>
-    <th>Roll No</th>
-    <th>Date</th>
-    <th>Time</th>
-</tr>
+<div class="page-wrap">
 
-{% for row in records %}
-<tr>
-    <td>{{ row[0] }}</td>
-    <td>{{ row[1] }}</td>
-    <td>{{ row[2] }}</td>
-    <td>{{ row[3] }}</td>
-</tr>
-{% endfor %}
+  <div class="section-heading">Session Overview</div>
 
-</table>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Total Records</div>
+      <div class="stat-value">{{ records | length }}</div>
+    </div>
+    <div class="stat-card" style="--accent:#00ffa3;">
+      <div class="stat-label">Date</div>
+      <div class="stat-value" style="font-size:1rem; padding-top:6px;" id="today-date">—</div>
+    </div>
+  </div>
 
+  <div class="section-heading">Attendance Log</div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Roll No</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if records %}
+          {% for row in records %}
+          <tr>
+            <td style="color:rgba(200,225,255,0.45);">{{ loop.index }}</td>
+            <td>{{ row[0] | capitalize }}</td>
+            <td style="font-family:'Courier New',monospace; color:#00d4ff;">{{ row[1] }}</td>
+            <td style="color:rgba(200,225,255,0.45);">{{ row[2] }}</td>
+            <td style="color:rgba(200,225,255,0.45);">{{ row[3] }}</td>
+            <td><span class="badge badge-present">Present</span></td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="6">
+              <div class="empty-state">
+                No attendance records found.
+              </div>
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top: 24px;">
+    <a href="/" class="back-link">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Back to Dashboard
+    </a>
+  </div>
+
+</div>
+
+<script>
+  const d = new Date();
+  document.getElementById("today-date").textContent =
+    d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+</script>
 </body>
 </html>
