@@ -1,13 +1,11 @@
-from flask import Flask, render_template, Response, request, redirect
+from flask import Flask, render_template, Response, request, redirect, session, url_for
+import os
 import cv2
 import numpy as np
-import face_recognition_models
 import face_recognition
-from flask import session, url_for
 from models.face_recognition import load_faces
 from database import get_db
 from datetime import datetime
-import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 app = Flask(__name__)
