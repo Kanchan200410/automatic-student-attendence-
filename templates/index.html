@@ -1,20 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>AI Attendance</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Attendance System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 </head>
 <body>
 
-<h2>Live Attendance (DeepFace)</h2>
+<nav class="site-nav">
+  <span class="brand">AttendAI <span>Smart Attendance</span></span>
+  <a href="/static" class="nav-link active">Dashboard</a>
+  <a href="/register" class="nav-link">Register</a>
+  <a href="/attendance" class="nav-link">Records</a>
+</nav>
 
-<img src="{{ url_for('video') }}" width="600">
+<div class="page-wrap">
 
-<br><br>
+  <div class="hero-strip">
+    <div class="hero-text">
+      <h2>Face Recognition<br>Attendance System</h2>
+      <p>Automated attendance marking via AI-powered facial recognition</p>
+    </div>
+    <div class="hero-status">
+      <div class="status-dot"></div>
+      Camera Active
+    </div>
+  </div>
 
-<a href="/register">Register Student</a> |
-<a href="/attendance">View Attendance</a> |
-<a href="/dashboard">Dashboard</a> |
-<a href="/logout">Logout</a>
+  <div class="section-label">Live Camera Feed</div>
+
+  <div class="camera-card">
+    <div class="camera-card-header">
+      <span class="cam-title">Camera 01 — Main Entrance</span>
+      <span class="live-pill">Live</span>
+    </div>
+    <div class="camera-feed-wrap">
+      <img src="{{ url_for('video') }}" alt="Live Camera Feed">
+      <div class="cam-overlay-bar">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <span id="cam-time">--:--:--</span>
+        &nbsp;·&nbsp; AI Recognition: Active
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Quick Actions</div>
+
+  <div class="action-row">
+    <a href="/register" class="action-card">
+      <div class="action-icon">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+      </div>
+      <div>
+        <h3>Register Student</h3>
+        <p>Add a new student with face image</p>
+      </div>
+      <span class="action-arrow">›</span>
+    </a>
+
+    <a href="/attendance" class="action-card">
+      <div class="action-icon">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+      </div>
+      <div>
+        <h3>View Attendance</h3>
+        <p>Browse and export attendance records</p>
+      </div>
+      <span class="action-arrow">›</span>
+    </a>
+  </div>
+
+</div>
+
+<script>
+  console.log("Camera stream started...");
+  function updateTime() {
+    const t = new Date().toLocaleTimeString('en-IN', {hour12: false});
+    const el = document.getElementById('cam-time');
+    if (el) el.textContent = t;
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+</script>
 
 </body>
 </html>
+
+
+
+
+####hrllo

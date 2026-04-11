@@ -1,0 +1,215 @@
+/* register.css — student registration page */
+
+.register-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .register-layout { grid-template-columns: 1fr; }
+}
+
+/* Form Card */
+.form-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+}
+
+.form-card-header {
+  background: var(--cream-dark);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 32px;
+}
+
+.form-card-header h2 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--text-dark);
+}
+
+.form-card-header p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.form-body { padding: 32px; }
+
+/* Form Groups */
+.form-group { margin-bottom: 24px; }
+
+.form-group label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green-mid);
+  margin-bottom: 8px;
+}
+
+.form-group input[type="text"] {
+  width: 100%;
+  border: 1px solid var(--border-mid);
+  border-radius: var(--r-md);
+  background: var(--cream);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.form-group input[type="text"]::placeholder { color: var(--text-muted); }
+
+.form-group input[type="text"]:focus {
+  border-color: var(--green);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(30,64,52,0.08);
+}
+
+/* File Upload Zone */
+.upload-zone {
+  border: 2px dashed var(--border-mid);
+  border-radius: var(--r-lg);
+  padding: 32px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+  background: var(--cream);
+}
+
+.upload-zone:hover {
+  border-color: var(--green-mid);
+  background: var(--green-light);
+}
+
+.upload-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.upload-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--green-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+
+.upload-icon svg { color: var(--green); }
+
+.upload-zone h4 {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.upload-zone p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.upload-zone .file-name {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--green-mid);
+  font-weight: 500;
+  display: none;
+}
+
+/* Form Footer */
+.form-footer {
+  padding: 20px 32px;
+  border-top: 1px solid var(--border);
+  background: var(--cream-dark);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Side Info Panel */
+.info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 20px;
+}
+
+.info-card h4 {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.info-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.info-step:last-child { margin-bottom: 0; }
+
+.step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--cream);
+  font-size: 0.72rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.info-step p {
+  font-size: 0.82rem;
+  color: var(--text-body);
+  line-height: 1.5;
+}
+
+.tip-box {
+  background: var(--gold-light);
+  border: 1px solid rgba(184,134,11,0.2);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.tip-box svg { color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+
+.tip-box p {
+  font-size: 0.8rem;
+  color: #5c4a00;
+  line-height: 1.5;
+}

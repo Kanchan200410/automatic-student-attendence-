@@ -1,38 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Register Student</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Student — AttendAI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
 </head>
 <body>
 
-<h2>Register Student</h2>
+<nav class="site-nav">
+  <span class="brand">AttendAI <span>Smart Attendance</span></span>
+  <a href="/static" class="nav-link">Dashboard</a>
+  <a href="/register" class="nav-link active">Register</a>
+  <a href="/attendance" class="nav-link">Records</a>
+</nav>
 
-<form method="POST" enctype="multipart/form-data">
+<div class="page-wrap">
 
-    Role:
-    <select name="role" required>
-        <option value="">-- Select Role --</option>
-        <option value="student">Student</option>
-        <option value="teacher">Teacher</option>
-        <option value="hod">HOD</option>
-        <option value="admin">Admin</option>
-    </select>
-    <br><br>
+  <div class="page-title">
+    <h1>Register Student</h1>
+    <p>Add a new student to the facial recognition database</p>
+  </div>
 
-    Name: <input type="text" name="name" required><br><br>
-    Roll No: <input type="text" name="roll" required><br><br>
-    Age: <input type="number" name="age" required><br><br>
-    Section: <input type="text" name="section" required><br><br>
-    Year: <input type="text" name="year" required><br><br>
-    Branch: <input type="text" name="branch" required><br><br>
-    Phone: <input type="text" name="phone" required><br><br>
-    Email: <input type="email" name="email" required><br><br>
+  <div class="register-layout">
 
-    Image: <input type="file" name="image" accept="image/*" required><br><br>
+    <!-- Main Form -->
+    <div class="form-card">
+      <div class="form-card-header">
+        <h2>Student Details</h2>
+        <p>All fields are required for registration</p>
+      </div>
 
-    <button type="submit">Register</button>
+      <div class="form-body">
+        <form method="POST" enctype="multipart/form-data" id="registerForm">
 
-</form>
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="e.g. Arjun Sharma" required>
+          </div>
+
+          <div class="form-group">
+            <label for="roll">Roll Number</label>
+            <input type="text" id="roll" name="roll" placeholder="e.g. 2024CS042" required>
+          </div>
+
+          <div class="form-group">
+            <label>Face Image</label>
+            <div class="upload-zone" id="uploadZone">
+              <input type="file" name="image" id="imageInput" accept="image/*" required>
+              <div class="upload-icon">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <h4>Click to upload image</h4>
+              <p>JPG, PNG or WEBP · Clear front-facing photo</p>
+              <div class="file-name" id="fileName"></div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="form-footer">
+        <button type="submit" form="registerForm" class="btn-primary" id="submitBtn">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+          Register Student
+        </button>
+        <a href="/static" class="btn-ghost">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Cancel
+        </a>
+      </div>
+    </div>
+
+    <!-- Side Panel -->
+    <div class="info-panel">
+      <div class="info-card">
+        <h4>How it works</h4>
+        <div class="info-step">
+          <div class="step-num">1</div>
+          <p>Enter the student's full name exactly as it appears in records</p>
+        </div>
+        <div class="info-step">
+          <div class="step-num">2</div>
+          <p>Provide their unique roll number for identification</p>
+        </div>
+        <div class="info-step">
+          <div class="step-num">3</div>
+          <p>Upload a clear, well-lit front-facing photo for AI training</p>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>Use a photo with good lighting and no obstructions. The face should be clearly visible for accurate recognition.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  document.getElementById('imageInput').addEventListener('change', function() {
+    const fn = document.getElementById('fileName');
+    if (this.files[0]) {
+      fn.textContent = this.files[0].name;
+      fn.style.display = 'block';
+    }
+  });
+
+  document.getElementById('registerForm').addEventListener('submit', function() {
+    const btn = document.getElementById('submitBtn');
+    btn.innerHTML = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Registering...';
+    btn.disabled = true;
+    btn.style.opacity = '0.75';
+  });
+</script>
 
 </body>
 </html>
